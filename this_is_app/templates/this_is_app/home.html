@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyNews</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+        }
+        header .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        header nav {
+            display: flex;
+            gap: 15px;
+        }
+        header nav a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+        header nav a:hover {
+            background-color: #555;
+            border-radius: 5px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .news-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .news-item {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .news-item h2 {
+            margin: 0 0 10px;
+        }
+        .news-item img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .news-item p {
+            margin: 0 0 15px;
+        }
+        .news-item .actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        .news-item .actions button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .news-item .actions button:hover {
+            background-color: #0056b3;
+        }
+        aside {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        aside a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+        aside a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">PyNews <a href="https://t.me/workm5">Портфолио</a></div>
+        <nav>
+            {% for category in categories %}
+            <a href="#">{{ category.category_name }}</a>
+            <a href="#"></a>
+            {% endfor %}
+        </nav>
+        <aside>
+            <a href="{% url 'predlojenie_novosta' %}">Предложить новость </a>
+        </aside>
+    </header>
+    <main class="container">
+        <div class="news-feed">
+            <div class="news-item">
+                {% for p in post %}
+                <img src="{{ p.post_photo.url }}" alt="{{ p.post_name }}">
+                <h2>{{ p.post_name }}</h2>
+                <p>{{ p.post_descr }}</p>
+                <div class="actions">
+                    <form action="like/{{ p.id }}" method="post">
+                        {% csrf_token %}
+                    <button type="submit">Like {{ p.like_post }}</button>
+                        </form>
+                    <form action="comment/{{ p.id }}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Comment</button></form>
+                </div>
+                {% endfor %}
+            </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
