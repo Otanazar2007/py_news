@@ -97,18 +97,26 @@ def like(request, pk):
         return redirect('home')
 
 @login_required()
-def predlojen_nov(request):
+def submit_news(request):
     if request.method == 'POST':
         form = PredlojenieNovostiForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
             new_post = form.save(commit=False)
             new_post.post_from_user = request.user
             new_post.save()
             messages.success(request, 'Успех')
+            print(new_post)
             return redirect('home')
         else:
+            print(f'Чего не так')
             messages.warning(request, 'Чето не так')
             return redirect('home')
     else:
         return redirect('home')
+
+@login_required()
+def predlojen_new(request):
+    categories = CategoryPost.objects.all()
+    form = PredlojenieNovostiForm()
+    return render(request, 'this_is_app/send_new.html', {'categories':categories,
+                                                         'form':form})

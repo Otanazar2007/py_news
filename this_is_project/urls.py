@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from this_is_app.views import home_page, comment_view, add_comment, comment, like, predlojen_nov
+from this_is_app.views import home_page, comment_view, add_comment, comment, like, submit_news, predlojen_new
 from django.conf import settings
 import user.views
 from django.conf.urls.static import static
@@ -29,7 +29,8 @@ urlpatterns = [
     path('comment/<int:pk>', comment, name = 'comment_from_post'),
     path('comment/add_comment/<int:pk>',add_comment, name = 'add_comment'),
     path('like/<int:pk>',like, name = 'add_to_likes'),
-    path('predlojeniye_novosta/', predlojen_nov, name = 'predlojenie_novosta')
+    path('predlojeniye_novosta/', predlojen_new, name = 'predlojenie_novosta'),
+    path('submit_news/', submit_news, name = 'submit_news')
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
